@@ -2,6 +2,7 @@
 
 const express = require('express');
 const todos = require('./todo');
+const search = require('./search');
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,19 @@ function requireUser(req, res, next) {
 
 app.get('/todos', requireUser, (req, res) => {
   res.json(todos.listTodos(req.userId));
+});
+
+app.get('/todos/search', requireUser, (req, res) => {
+  const q = req.query.q;
+  const results = search.searchTodos(req.userId, q);
+  const ranked = search.rankResults(results, q);
+
+  res.json(
+    ranked.map(row => ({
+      ...row,
+      highlighted: search.highlight(row.title, q)
+    }))
+  );
 });
 
 app.get('/todos/:id', requireUser, (req, res) => {

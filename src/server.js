@@ -2,6 +2,7 @@
 
 const express = require('express');
 const todos = require('./todo');
+const premium = require('./premium');
 
 const app = express();
 app.use(express.json());
@@ -60,6 +61,9 @@ app.delete('/todos/:id', requireUser, (req, res) => {
   }
   res.status(204).end();
 });
+
+app.post('/billing/upgrade', (req, res) => premium.upgradePlan(req, res));
+app.post('/billing/cancel', (req, res) => premium.cancelPlan(req, res));
 
 if (require.main === module) {
   app.listen(3000, () => console.log('listening on 3000'));

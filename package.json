@@ -1,0 +1,17 @@
+{
+  "name": "simple-todo-app",
+  "version": "1.0.0",
+  "description": "A small todo application used as a code review fixture",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test tests/"
+  },
+  "keywords": ["todo", "express", "sqlite"],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^9.4.0",
+    "express": "^4.18.2"
+  }
+}
